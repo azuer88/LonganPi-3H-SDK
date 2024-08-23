@@ -1,5 +1,5 @@
 chroot "$1" useradd --home-dir /home/sipeed --create-home sipeed --shell /bin/bash
-echo sipeed:licheepi | chroot "$1" chpasswd
+echo $USER_NAME:$USER_PASS | chroot "$1" chpasswd
 chroot "$1" usermod -a -G dialout sipeed
 chroot "$1" usermod -a -G cdrom sipeed
 chroot "$1" usermod -a -G audio sipeed
