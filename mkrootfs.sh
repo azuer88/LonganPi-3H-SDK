@@ -39,7 +39,7 @@ then
     fonts-noto-ui-core tango-icon-theme"
 fi
 
-NOGUI=0
+NOGUI=1
 if [ "${NOGUI}" -eq 1 ]
 then
     DESKTOP_PACKAGE=""
@@ -54,25 +54,10 @@ genrootfs() {
     echo "
 deb ${MIRROR}/debian/ ${CODENAME} main contrib non-free non-free-firmware
 deb ${MIRROR}/debian/ ${CODENAME}-updates main contrib non-free non-free-firmware
-" | $MMDEBSTRAP --aptopt='Dir::Etc::Trusted "/usr/share/keyrings/debian-archive-keyring.gpg"' --architectures=arm64 -v -d \
-		--customize-hook='chroot "$1" useradd --home-dir /home/sipeed --create-home sipeed --shell /bin/bash' \
-		--customize-hook='echo sipeed:licheepi | chroot "$1" chpasswd' \
-		--customize-hook='chroot "$1" usermod -a -G dialout sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G cdrom sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G audio sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G video sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G plugdev sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G users sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G netdev sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G input sipeed' \
-		--customize-hook='chroot "$1" usermod -a -G sudo sipeed' \
-		--customize-hook='echo root:root | chroot "$1" chpasswd' \
-		--customize-hook='sed -i -e s/workstation=no/workstation=yes/g "$1"/etc/avahi/avahi-daemon.conf' \
-		--customize-hook='echo U_BOOT_PARAMETERS=\"console=tty0 console=ttyS0,115200 rootwait earlycon clk_ignore_unused rw\" >> "$1"/etc/default/u-boot' \
-		--customize-hook='echo U_BOOT_ROOT=\"root=LABEL=lpi3h-root\" >> "$1"/etc/default/u-boot' \
-		--customize-hook='cat "$1"/etc/default/u-boot' \
-		--customize-hook='cp ./build/*.deb "$1/opt/" ' \
-		--customize-hook='chroot "$1" sh -c "dpkg -i /opt/*.deb"' \
+" | $MMDEBSTRAP \
+        --aptopt='Acquire::HTTP::Proxy "http://aptcacheserver:8000";' \
+        --aptopt='Dir::Etc::Trusted "/usr/share/keyrings/debian-archive-keyring.gpg"' --architectures=arm64 -v -d \
+        --hook-dir=./hooks \
 		--include="${BASE_PACKAGE} ${DESKTOP_PACKAGE} ${USER_PACKAGE}" > ./build/rootfs.tar
 }
 
