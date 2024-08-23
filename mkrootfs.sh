@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# load .env
+set -a && source .env && set +a
+
+
 if [ -z "$MMDEBSTRAP" ]
 then
     MMDEBSTRAP=mmdebstrap
@@ -39,7 +43,7 @@ then
     fonts-noto-ui-core tango-icon-theme"
 fi
 
-NOGUI=1
+# NOGUI=1 load from .env 
 if [ "${NOGUI}" -eq 1 ]
 then
     DESKTOP_PACKAGE=""
