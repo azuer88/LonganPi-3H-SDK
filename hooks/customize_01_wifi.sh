@@ -1,7 +1,11 @@
 # SSID=  load from .env (in mkrootfs.sh)
 # PKEY=  load from .env 
 
+echo "ORIG MACID: $MCID"
 macid=${MACID//:}
+echo "MACID: [$mcid]"
+echo "macid: ${macid,,}"
+
 cat << EOF > "$1/etc/NetworkManager/system-connections/$SSID.nmconnection"
 [connection]
 id=$SSID
