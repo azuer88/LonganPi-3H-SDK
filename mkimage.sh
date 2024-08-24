@@ -23,6 +23,10 @@ mkdir -pv build/tmp/
 mkdir -pv build/root/
 mkdir -pv build/images/
 
+#C
+IMAGE_BLOCKS=`du -k --block-size 500M build/rootfs.tar | cut -f1`
+IMAGE_SIZE=$(( IMAGE_BLOCKS * 500 ))
+
 cp -v ./build/u-boot-sunxi-with-spl.bin ./build/input/
 dd if=/dev/zero of=./build/input/rootfs.ext4 bs=1M count=$IMAGE_SIZE
 
