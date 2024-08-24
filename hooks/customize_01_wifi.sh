@@ -1,8 +1,8 @@
 # SSID=  load from .env (in mkrootfs.sh)
 # PKEY=  load from .env 
 
-echo "ORIG MACID: $MCID"
-macid=${MACID//:}
+echo "ORIG MACID: $MACID"
+macid=${MACID///:}
 echo "MACID: [$mcid]"
 echo "macid: ${macid,,}"
 
