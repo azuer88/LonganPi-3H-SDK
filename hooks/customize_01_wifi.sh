@@ -27,3 +27,5 @@ method=auto
 [proxy]
 
 EOF
+
+chmod 0600 "$1/etc/NetworkManager/system-connections/$SSID.nmconnection"
