@@ -1,11 +1,13 @@
 # SSID=  load from .env (in mkrootfs.sh)
 # PKEY=  load from .env 
 
+macid=${MACID//:}
 cat << EOF > "$1/etc/NetworkManager/system-connections/$SSID.nmconnection"
 [connection]
 id=$SSID
 uuid=$(uuidgen)
 type=wifi
+interface-name=wlx${macid,,}
 
 [wifi]
 mode=infrastructure
