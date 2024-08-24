@@ -21,7 +21,7 @@ mkdir -pv build/root/
 mkdir -pv build/images/
 
 cp -v ./build/u-boot-sunxi-with-spl.bin ./build/input/
-dd if=/dev/zero of=./build/input/rootfs.ext4 bs=1M count=3000
+dd if=/dev/zero of=./build/input/rootfs.ext4 bs=1M count=1500
 
 mkfs.ext4 -L lpi3h-root ./build/input/rootfs.ext4
 mkdir -pv ./build/rootfs
