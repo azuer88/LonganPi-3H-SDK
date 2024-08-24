@@ -9,3 +9,5 @@ $AUTHORIZED_KEY
 
 EOF
 chmod 0600 "$1/home/$USER_NAME/.ssh/authorized_keys"
+chown $USER_NAME:$USER_NAME -R "$1/home/$USER_NAME/.ssh"
+

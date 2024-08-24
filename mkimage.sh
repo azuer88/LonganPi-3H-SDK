@@ -6,6 +6,9 @@ then
     exit 1
 fi
 
+# load .env
+set -a && source .env && set +a
+
 set -eux
 
 rm -rf build/rootfs
@@ -21,7 +24,7 @@ mkdir -pv build/root/
 mkdir -pv build/images/
 
 cp -v ./build/u-boot-sunxi-with-spl.bin ./build/input/
-dd if=/dev/zero of=./build/input/rootfs.ext4 bs=1M count=1500
+dd if=/dev/zero of=./build/input/rootfs.ext4 bs=1M count=$IMAGE_SIZE
 
 mkfs.ext4 -L lpi3h-root ./build/input/rootfs.ext4
 mkdir -pv ./build/rootfs
