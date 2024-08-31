@@ -45,7 +45,6 @@ else
 	umount ./build/rootfs
 fi
 
-# cp -v genimage.cfg ./build/
 if [ -z "${IMAGE_NAME:-}" ]; then
     IMAGE_NAME="sdcard"
 fi 
