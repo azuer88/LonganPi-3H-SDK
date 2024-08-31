@@ -67,7 +67,7 @@ image ${IMAGE_NAME}.img {
 		offset = 8M
 	}
 }
-EOF 
+EOF
 
 cd ./build
 genimage
