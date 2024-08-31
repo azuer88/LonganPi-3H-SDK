@@ -28,6 +28,7 @@ IMAGE_BLOCKS=`du -k --block-size 500M build/rootfs.tar | cut -f1`
 IMAGE_SIZE=$(( IMAGE_BLOCKS * 500 ))
 
 cp -v ./build/u-boot-sunxi-with-spl.bin ./build/input/
+
 dd if=/dev/zero of=./build/input/rootfs.ext4 bs=1M count=$IMAGE_SIZE
 
 mkfs.ext4 -L lpi3h-root ./build/input/rootfs.ext4
@@ -44,9 +45,37 @@ else
 	umount ./build/rootfs
 fi
 
-cp -v genimage.cfg ./build/
+# cp -v genimage.cfg ./build/
+if [ -z "$IMAGE_NAME" ]; then
+    IMAGE_NAME="sdcard"
+fi 
+cat << EOF > "build/genimage.cfg"
+# Minimal SD card image for the Allwinner H618
+
+image ${IMAGE_NAME}.img {
+	hdimage {
+	}
+
+	partition u-boot {
+		in-partition-table = false
+		image = "u-boot-sunxi-with-spl.bin"
+		offset = 8K
+	}
+
+	partition rootfs {
+		partition-type = 0x83
+		image = "rootfs.ext4"
+		offset = 8M
+	}
+}
+EOF 
+
 cd ./build
 genimage
 cd ..
+
+echo "compressing image..."
+# requires pv to be installed 
+pv build/images/${IMAGE_NAME}.img | xz -z > build/${IMAGE_NAME}.img.xz
 
 rm -rf ./build/rootfs
