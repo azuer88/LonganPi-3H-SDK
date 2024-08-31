@@ -75,6 +75,6 @@ cd ..
 
 echo "compressing image..."
 # requires pv to be installed 
-pv build/images/${IMAGE_NAME}.img | xz -z > build/${IMAGE_NAME}.img.xz
+pv build/images/${IMAGE_NAME}.img | xz -z > build/images/${IMAGE_NAME}.img.xz
 
 rm -rf ./build/rootfs
