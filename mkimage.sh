@@ -46,7 +46,7 @@ else
 fi
 
 # cp -v genimage.cfg ./build/
-if [ -z "$IMAGE_NAME" ]; then
+if [ -z "${IMAGE_NAME:-}" ]; then
     IMAGE_NAME="sdcard"
 fi 
 cat << EOF > "build/genimage.cfg"
