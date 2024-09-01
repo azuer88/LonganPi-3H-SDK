@@ -11,7 +11,7 @@ if [ -f "${BUILDPATH}/rootfs_base.tar" ]; then
     echo "Using 'rootfs_base.tar as base image, will overwrite rootfs.tar"
     read -n1 -s -r -p $'Press space to continue...\n' key
 
-    if [ "$key" = ' ' ]; then
+    if [ "$key" = '' ]; then
         # Space pressed, do something
         echo "'$key is empty when SPACE is pressed"  # uncomment to trace
         :  # continue
