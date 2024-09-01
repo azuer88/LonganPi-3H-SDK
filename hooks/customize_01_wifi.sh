@@ -1,5 +1,17 @@
 # SSID=  load from .env (in mkrootfs.sh)
 # PKEY=  load from .env 
+if [ -z "${SSID:-}" ]; then 
+    echo "SSID not defined, will not do anything."
+    exit -1
+fi
+if [ -z "${MACID:-}" ]; then 
+    echo "MACID not defined, will not do anything."
+    exit -2 
+fi
+if [ -z "${PKEY:-}" ]; then
+    echo "PKEY not defined, will not do anything."
+    exit -3
+fi
 
 cat << EOF > "$1/etc/NetworkManager/system-connections/$SSID.nmconnection"
 [connection]
