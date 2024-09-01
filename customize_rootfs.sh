@@ -13,7 +13,7 @@ if [ -f "${BUILDPATH}/rootfs_base.tar" ]; then
 
     if [ "$key" = ' ' ]; then
         # Space pressed, do something
-        # echo [$key] is empty when SPACE is pressed # uncomment to trace
+        echo [$key] is empty when SPACE is pressed # uncomment to trace
         :  # continue
     else
         # Anything else pressed, do whatever else.
