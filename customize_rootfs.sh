@@ -1,4 +1,4 @@
-#!/usr/bin/sudo bash
+#!/usr/bin/env bash
 
 # # force sudo 
 # if [ $(id -u) != "0" ]; then 
@@ -54,8 +54,18 @@ PATTERN="*.sh"
 
 for file in $SCRIPTS/$PATTERN; do
     if [ -f  "${file}" ] && [ -r "${file}" ] && [ -x "${file}" ] ; then
-        echo "Executing $file"
-        source "$file" "$1"
+        if [[ $file = user* ]]; then
+            echo "Executing $file as user"
+            exec "$file" "$1"
+        else
+            if [ `id -u` -ne 0 ]; then
+            echo "Executing $file as fakeroot"
+                fakeroot -- bash "$file" "$1"
+            else
+                echo "Executing $file as root"
+                exec "$file" "$1"
+            fi
+        fi
     else
         echo "skipped: $file"
     fi
