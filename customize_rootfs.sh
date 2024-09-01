@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/sudo bash
 
 # # force sudo 
 # if [ $(id -u) != "0" ]; then 
