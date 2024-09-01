@@ -2,7 +2,7 @@
 
 # force sudo 
 if [ $(id -u) != "0" ]; then 
-    sudo "$0" "$@"  
+    exec sudo "$0" "$@"  
     exit $?
 fi 
 
@@ -22,6 +22,7 @@ if [ -f "${BUILDPATH}/rootfs_base.tar" ]; then
         # Space pressed, do something
         echo "'$key is empty when SPACE is pressed"  # uncomment to trace
         :  # continue
+        cp "$BUILDPATH/rootfs_base.tar" "$BUILDPATH/rootfs.tar"
     else
         # Anything else pressed, do whatever else.
         # echo [$key] not empty
@@ -30,6 +31,10 @@ if [ -f "${BUILDPATH}/rootfs_base.tar" ]; then
     fi
 fi 
 
+if [ ! -f "$BUILDPATH/rootfs.tar" ]; then
+    echo "Missing rootfs.tar"
+    exit -2
+fi
 
 ARCHIVEMOUNT=`which archivemount`
 if [ ! -x "${ARCHIVEMOUNT}" ] ; then 
