@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# force sudo 
+if [ $(id -u) != "0" ]; then 
+    sudo "$0" "$@"  
+    exit $?
+fi 
+
+
 # load .env
 set -a && source .env && set +a
 
@@ -43,11 +50,11 @@ PATTERN="*.sh"
 for file in $SCRIPTS/$PATTERN; do
     if [ -f  "${file}" ] && [ -r "${file}" ] && [ -x "${file}" ] ; then
         echo "Executing $file"
-        sudo exec "$file" "$BUILDPATH/root"
+        exec "$file" "$BUILDPATH/root"
     else
         echo "skipped: $file"
     fi
 done
 
 # unmount 
-fusermount -u ./build/root
+umount -u "$BUILDPATH/root"
