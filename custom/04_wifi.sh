@@ -14,6 +14,7 @@ if [ -z "${PKEY:-}" ]; then
 fi
 TARGET="/etc/NetworkManager/system-connections/$SSID.nmconnection"
 echo "Creating $TARGET in $1"
+umask u=rw,go=
 cat << EOF > "$1$TARGET"
 [connection]
 id=$SSID
@@ -40,5 +41,3 @@ method=auto
 [proxy]
 
 EOF
-echo "Changing file permission to 0600"
-chmod 0600 "$1$TARGET"
