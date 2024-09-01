@@ -60,7 +60,7 @@ for file in $SCRIPTS/$PATTERN; do
         else
             if [ `id -u` -ne 0 ]; then
             echo "Executing $file as fakeroot"
-                fakeroot -- bash "$file" "$1"
+                fakeroot -u -- bash "$file" "$1"
             else
                 echo "Executing $file as root"
                 exec "$file" "$1"
