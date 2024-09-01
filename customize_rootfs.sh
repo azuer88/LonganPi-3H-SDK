@@ -55,7 +55,7 @@ PATTERN="*.sh"
 for file in $SCRIPTS/$PATTERN; do
     if [ -f  "${file}" ] && [ -r "${file}" ] && [ -x "${file}" ] ; then
         echo "Executing $file"
-        exec "$file" "$1"
+        source "$file" "$1"
     else
         echo "skipped: $file"
     fi
