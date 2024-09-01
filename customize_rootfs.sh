@@ -62,4 +62,4 @@ for file in $SCRIPTS/$PATTERN; do
 done
 
 # unmount 
-umount -u "$BUILDPATH/root"
+# umount -u "$BUILDPATH/root"
