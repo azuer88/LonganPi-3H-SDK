@@ -12,8 +12,9 @@ if [ -z "${PKEY:-}" ]; then
     echo "PKEY not defined, will not do anything."
     exit -3
 fi
-
-cat << EOF > "$1/etc/NetworkManager/system-connections/$SSID.nmconnection"
+TARGET="/etc/NetworkManager/system-connections/$SSID.nmconnection"
+echo "Creating $TARGET in $1"
+cat << EOF > "$1$TARGET"
 [connection]
 id=$SSID
 uuid=$(uuidgen)
@@ -39,5 +40,5 @@ method=auto
 [proxy]
 
 EOF
-
-chmod 0600 "$1/etc/NetworkManager/system-connections/$SSID.nmconnection"
+echo "Changing file permission to 0600"
+chmod 0600 "$1$TARGET"
