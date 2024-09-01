@@ -1,48 +1,48 @@
 #!/usr/bin/env bash
 
-# force sudo 
-if [ $(id -u) != "0" ]; then 
-    exec sudo "$0" "$@"  
-    exit $?
-fi 
+# # force sudo 
+# if [ $(id -u) != "0" ]; then 
+#     exec sudo "$0" "$@"  
+#     exit $?
+# fi 
 
 
-# load .env
-set -a && source .env && set +a
+# # load .env
+# set -a && source .env && set +a
 
-set -x
+# set -x
 
-BUILDPATH="$(realpath -s './build')"
+# BUILDPATH="$(realpath -s './build')"
 
-if [ -f "${BUILDPATH}/rootfs_base.tar" ]; then 
-    echo "Using 'rootfs_base.tar as base image, will overwrite rootfs.tar"
-    read -n1 -s -r -p $'Press space to continue...\n' key
+# if [ -f "${BUILDPATH}/rootfs_base.tar" ]; then 
+#     echo "Using 'rootfs_base.tar as base image, will overwrite rootfs.tar"
+#     read -n1 -s -r -p $'Press space to continue...\n' key
 
-    if [ "$key" = '' ]; then
-        # Space pressed, do something
-        echo "'$key is empty when SPACE is pressed"  # uncomment to trace
-        :  # continue
-        cp "$BUILDPATH/rootfs_base.tar" "$BUILDPATH/rootfs.tar"
-    else
-        # Anything else pressed, do whatever else.
-        # echo [$key] not empty
-        echo "Exiting."
-        exit -1
-    fi
-fi 
+#     if [ "$key" = '' ]; then
+#         # Space pressed, do something
+#         echo "'$key is empty when SPACE is pressed"  # uncomment to trace
+#         :  # continue
+#         cp "$BUILDPATH/rootfs_base.tar" "$BUILDPATH/rootfs.tar"
+#     else
+#         # Anything else pressed, do whatever else.
+#         # echo [$key] not empty
+#         echo "Exiting."
+#         exit -1
+#     fi
+# fi 
 
-if [ ! -f "$BUILDPATH/rootfs.tar" ]; then
-    echo "Missing rootfs.tar"
-    exit -2
-fi
+# if [ ! -f "$BUILDPATH/rootfs.tar" ]; then
+#     echo "Missing rootfs.tar"
+#     exit -2
+# fi
 
-ARCHIVEMOUNT=`which archivemount`
-if [ ! -x "${ARCHIVEMOUNT}" ] ; then 
-    echo "Can not find archivemount executable.  Maybe apt install archivemount?"
-fi 
+# ARCHIVEMOUNT=`which archivemount`
+# if [ ! -x "${ARCHIVEMOUNT}" ] ; then 
+#     echo "Can not find archivemount executable.  Maybe apt install archivemount?"
+# fi 
 
-# mount build/rootfs.tar
-archivemount "$BUILDPATH/rootfs.tar" "$BUILDPATH/root" 
+# # mount build/rootfs.tar
+# archivemount "$BUILDPATH/rootfs.tar" "$BUILDPATH/root" 
 
 
 SCRIPTS="./custom"
@@ -55,7 +55,7 @@ PATTERN="*.sh"
 for file in $SCRIPTS/$PATTERN; do
     if [ -f  "${file}" ] && [ -r "${file}" ] && [ -x "${file}" ] ; then
         echo "Executing $file"
-        exec "$file" "$BUILDPATH/root"
+        exec "$file" "$1"
     else
         echo "skipped: $file"
     fi

@@ -38,10 +38,12 @@ if [ `id -u` -ne 0 ]
 then
 	fuse2fs -o fakeroot ./build/input/rootfs.ext4 ./build/rootfs
 	fakeroot -- tar --numeric-owner -xpf build/rootfs.tar -C ./build/rootfs/
+	sudo sh customize_rootfs.sh ./build/rootfs
 	sudo umount ./build/rootfs
 else
 	mount ./build/input/rootfs.ext4 ./build/rootfs/
 	tar --numeric-owner -xpf build/rootfs.tar -C ./build/rootfs/
+	exec customize_rootfs.sh ./build/rootfs
 	umount ./build/rootfs
 fi
 
