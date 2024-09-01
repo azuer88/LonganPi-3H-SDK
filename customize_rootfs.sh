@@ -8,7 +8,7 @@
 
 
 # # load .env
-# set -a && source .env && set +a
+set -a && source .env && set +a
 
 # set -x
 

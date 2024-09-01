@@ -14,7 +14,7 @@ if [ -z "${PKEY:-}" ]; then
 fi
 TARGET="/etc/NetworkManager/system-connections/$SSID.nmconnection"
 echo "Creating $TARGET in $1"
-umask u=rw,go=
+umask 077
 cat << EOF > "$1$TARGET"
 [connection]
 id=$SSID
