@@ -9,5 +9,5 @@ $AUTHORIZED_KEY
 
 EOF
 chmod 0600 "$1/home/$USER_NAME/.ssh/authorized_keys"
-chown --reference="$1/home/$USER_NAME/.bashrc" -R "$1/home/$USER_NAME/.ssh"
+chown 1000:1000 "$1/home/$USER_NAME/.ssh"
 
