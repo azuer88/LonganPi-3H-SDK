@@ -9,3 +9,5 @@ EOF
 else
     echo "APT_PROXY is not defined.  Not doing anything."
 fi
+# ensure it is owned by root
+chown root:root "$1${PROXYFILE}"
