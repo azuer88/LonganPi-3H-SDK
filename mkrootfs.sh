@@ -55,6 +55,11 @@ set -eux
 
 
 genrootfs() {
+    if [ -n "${APT_PROXY:-}" ]; then
+        APTOPT=""
+    else
+        APTOPT="--aptopt='Acquire::HTTP::Proxy \"$APT_PROXY\";'"
+    fi
     echo "
 deb ${MIRROR}/debian/ ${CODENAME} main contrib non-free non-free-firmware
 deb ${MIRROR}/debian/ ${CODENAME}-updates main contrib non-free non-free-firmware
